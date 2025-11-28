@@ -1,4 +1,4 @@
-import { Image, Text, View } from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import { styles } from "./styles";
 import { Button } from "../components/Button";
 import { Input } from "../components/Input";
@@ -25,6 +25,9 @@ export default function App() {
               <Filter key={status} status={status} isActive={false} />
             ))
           }
+          <TouchableOpacity style={styles.clearButton}>
+            <Text style={styles.clearText}>Limpar</Text>
+          </TouchableOpacity>
         </View>
 
       </View>

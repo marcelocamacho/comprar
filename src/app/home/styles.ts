@@ -30,6 +30,24 @@ export const styles = StyleSheet.create({
         borderBottomRightRadius: 24,
         borderBottomLeftRadius: 10,
         marginTop: 24,
-        padding: 14
+        padding: 14,
+        paddingTop: 32
+
+    },
+    header:{
+        width: "100%",
+        flexDirection: "row",
+        gap: 12,
+        borderBottomColor: "#E4E6EC",
+        borderBottomWidth: 1,
+        paddingBottom: 12
+    },
+    clearButton:{
+        marginLeft: "auto"
+    },
+    clearText:{
+        fontSize: 12,
+        color: "#828282",
+        fontWeight: 600,
     },
 })
