@@ -1,10 +1,11 @@
-import { Image, Text, TouchableOpacity, View, ScrollView, FlatList } from "react-native";
+import { Image, Text, TouchableOpacity, View, ScrollView, FlatList, Alert } from "react-native";
 import { styles } from "./styles";
 import { Button } from "../components/Button";
 import { Input } from "../components/Input";
 import { Filter } from "../components/Filter";
 import { FilterStatus } from "../types/FilterStatus";
 import { Item } from "../components/Item";
+import { useState } from "react";
 
 const FILTER_STATUS: FilterStatus[] = [FilterStatus.PENDING, FilterStatus.DONE]
 const ITEMS =  [
@@ -18,13 +19,30 @@ const ITEMS =  [
 
 ]
 export default function App() {
+  
+  const [filter, setFilter] = useState(FilterStatus.PENDING)
+  const [description, setDescription] = useState("")
+  const [items, setItems] = useState<any>([])
+
+  function handleAdd(){
+    if(!description.trim()){
+      Alert.alert("Adicionar", "Informe a descrição para adicionar.")
+    }
+    const newItem ={
+      id: Math.random().toString().substring(2),
+      description,
+      status: FilterStatus.PENDING
+    }
+
+    setItems([...items,newItem])
+  }
   return (
     <View style={styles.container}>
       <Image style={styles.logo} source={require("@/assets/logo.png")} />
       <View style={styles.form}>
 
-        <Input placeholder="O que você precisa comprar?" />
-        <Button title={"Entrar"} activeOpacity={0.8} onPress={() => console.log("Entrar")} />
+        <Input placeholder="O que você precisa comprar?" onChangeText={setDescription}/>
+        <Button title={"Adicionar"} activeOpacity={0.8} onPress={handleAdd} />
 
       </View>
 
@@ -32,7 +50,7 @@ export default function App() {
         <View style={styles.header}>
           {
             FILTER_STATUS.map((status) => (
-              <Filter key={status} status={status} isActive={false} />
+              <Filter key={status} status={status} isActive={status === filter} onPress={() => setFilter(status)}/>
             ))
           }
           <TouchableOpacity style={styles.clearButton}>
@@ -42,13 +60,13 @@ export default function App() {
 
 
         <FlatList
-          data={ITEMS}
+          data={items}
           keyExtractor={(item)=> item.id}
           renderItem={({item})=>(
               <Item
                 data={item}
-                onRemove={() => console.log("remover")}
-                onStatus={() => console.log("status")}
+                onRemove={() => console.log( item.id )}
+                onStatus={() => console.log(item.status)}
               /> )}
           showsVerticalScrollIndicator={false}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
