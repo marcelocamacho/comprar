@@ -4,7 +4,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text style={styles.text}> Hello, World!</Text>
-      <Image style={styles.logo} source={require("../../assets/logo.png")} />
+      <Image style={styles.logo} source={require("@/assets/logo.png")} />
     </View>
   )
 }
