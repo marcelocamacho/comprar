@@ -7,7 +7,7 @@ import { FilterStatus } from "../types/FilterStatus";
 import { Item } from "../components/Item";
 
 const FILTER_STATUS: FilterStatus[] = [FilterStatus.PENDING, FilterStatus.DONE]
-
+const ITEMS =  Array.from({ length: 100 }).map((_, index) => index )
 export default function App() {
   return (
     <View style={styles.container}>
@@ -34,9 +34,9 @@ export default function App() {
 
         <ScrollView>
           {
-            Array.from({ length: 100 }).map((value, index) => (
+            ITEMS.map((value) => (
               <Item
-                key={index}
+                key={value}
                 data={{ status: FilterStatus.DONE, description: "Café" }}
                 onRemove={() => console.log("remover")}
                 onStatus={() => console.log("status")}
