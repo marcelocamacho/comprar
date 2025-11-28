@@ -9,5 +9,9 @@ export const styles = StyleSheet.create({
     text: {
         fontSize: 32,
         fontWeight: "bold"
+    },
+    logo: {
+        width: 134,
+        height: 34
     }
 })
