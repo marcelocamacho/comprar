@@ -31,7 +31,7 @@ export const styles = StyleSheet.create({
         borderBottomLeftRadius: 10,
         marginTop: 24,
         padding: 14,
-        paddingTop: 32
+        paddingTop: 16
 
     },
     header:{
@@ -50,4 +50,19 @@ export const styles = StyleSheet.create({
         color: "#828282",
         fontWeight: 600,
     },
+    separator: {
+        width: "100%",
+        height: 1,
+        backgroundColor: "#EEF0F5",
+        marginVertical: 16
+    },
+    listContent:{
+        paddingTop: 24,
+        paddingBottom: 62
+    },
+    empty:{
+        fontSize: 14,
+        color: "#808080",
+        textAlign: "center"
+    }
 })
