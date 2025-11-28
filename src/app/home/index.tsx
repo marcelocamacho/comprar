@@ -2,6 +2,8 @@ import { Image, Text, View } from "react-native";
 import { styles } from "./styles";
 import { Button } from "../components/Button";
 import { Input } from "../components/Input";
+import { Filter } from "../components/Filter";
+import { FilterStatus } from "../types/FilterStatus";
 export default function App() {
   return (
     <View style={styles.container}>
@@ -14,7 +16,8 @@ export default function App() {
       </View>
 
       <View style={styles.content}>
-        
+        <Filter status={FilterStatus.PENDING} isActive/>
+        <Filter status={FilterStatus.DONE} isActive={false}/>
       </View>
     </View>
   )
