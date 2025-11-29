@@ -43,6 +43,17 @@ export default function Home() {
     setFilter(FilterStatus.PENDING)
   }
 
+  async function handleRemove(id: string){
+    try{
+      await itemsStorage.remove(id)
+      await itemsByStatus()
+    } catch (error){
+      Alert.alert("Erro ao remover item")
+    }
+  }
+
+  async function handleStatus(id: string){}
+
   async function itemsByStatus() {
     try {
       const response = await itemsStorage.getByStatus(filter)
@@ -89,8 +100,8 @@ export default function Home() {
           renderItem={({ item }) => (
             <Item
               data={item}
-              onRemove={() => console.log(item.id)}
-              onStatus={() => console.log(item.status)}
+              onRemove={() => handleRemove(item.id)}
+              onStatus={() => handleStatus(item.id)}
             />)}
           showsVerticalScrollIndicator={false}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
