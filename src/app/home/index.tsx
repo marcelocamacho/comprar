@@ -34,7 +34,7 @@ export default function App() {
       status: FilterStatus.PENDING
     }
 
-    setItems([...items,newItem])
+    setItems((prevState) => [...prevState,newItem])
   }
   return (
     <View style={styles.container}>
