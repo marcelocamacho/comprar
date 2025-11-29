@@ -37,6 +37,8 @@ export default function Home() {
 
     await itemsStorage.add(newItem)
     await itemsByStatus()
+    Alert.alert("Adicionar", `Adicionado ${description}.`)
+    setDescription('')
   }
 
   async function itemsByStatus() {
@@ -58,7 +60,10 @@ export default function Home() {
       <Image style={styles.logo} source={require("@/assets/logo.png")} />
       <View style={styles.form}>
 
-        <Input placeholder="O que você precisa comprar?" onChangeText={setDescription} />
+        <Input 
+          placeholder="O que você precisa comprar?"
+          onChangeText={setDescription}
+          value={description} />
         <Button title={"Adicionar"} activeOpacity={0.8} onPress={handleAdd} />
 
       </View>
