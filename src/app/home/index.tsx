@@ -1,10 +1,10 @@
 import { Image, Text, TouchableOpacity, View, ScrollView, FlatList, Alert } from "react-native";
 import { styles } from "./styles";
-import { Button } from "../components/Button";
-import { Input } from "../components/Input";
-import { Filter } from "../components/Filter";
-import { FilterStatus } from "../types/FilterStatus";
-import { Item } from "../components/Item";
+import { Button } from "../../components/Button";
+import { Input } from "../../components/Input";
+import { Filter } from "../../components/Filter";
+import { FilterStatus } from "../../types/FilterStatus";
+import { Item } from "../../components/Item";
 import { useState } from "react";
 
 const FILTER_STATUS: FilterStatus[] = [FilterStatus.PENDING, FilterStatus.DONE]
@@ -18,7 +18,7 @@ const ITEMS =  [
 
 
 ]
-export default function App() {
+export default function Home() {
   
   const [filter, setFilter] = useState(FilterStatus.PENDING)
   const [description, setDescription] = useState("")

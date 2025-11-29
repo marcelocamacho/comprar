@@ -1,4 +1,4 @@
-import { FilterStatus } from "@/app/types/FilterStatus"
+import { FilterStatus } from "@/types/FilterStatus"
 import { StyleSheet, TouchableOpacity, TouchableOpacityProps, Text } from "react-native"
 import { StatusIcon } from "../StatusIcon"
 
