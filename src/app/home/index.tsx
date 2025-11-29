@@ -5,43 +5,59 @@ import { Input } from "../../components/Input";
 import { Filter } from "../../components/Filter";
 import { FilterStatus } from "../../types/FilterStatus";
 import { Item } from "../../components/Item";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { itemsStorage, ItemStorage } from "@/storage/itemsStorage";
 
 const FILTER_STATUS: FilterStatus[] = [FilterStatus.PENDING, FilterStatus.DONE]
-const ITEMS =  [
-  {id: "1", status: FilterStatus.DONE, description: "1 pacote de café"},
-  {id: "2", status: FilterStatus.PENDING, description: "1 pacote de macarrão"},
-  {id: "3", status: FilterStatus.DONE, description: "1 pacote de açucar"},
-  {id: "4", status: FilterStatus.DONE, description: "1 pote de manteiga"},
-  {id: "5", status: FilterStatus.DONE, description: "1 cx de leite"},
-  {id: "6", status: FilterStatus.PENDING, description: "1 cacho de banana"},
+const ITEMS = [
+  { id: "1", status: FilterStatus.DONE, description: "1 pacote de café" },
+  { id: "2", status: FilterStatus.PENDING, description: "1 pacote de macarrão" },
+  { id: "3", status: FilterStatus.DONE, description: "1 pacote de açucar" },
+  { id: "4", status: FilterStatus.DONE, description: "1 pote de manteiga" },
+  { id: "5", status: FilterStatus.DONE, description: "1 cx de leite" },
+  { id: "6", status: FilterStatus.PENDING, description: "1 cacho de banana" },
 
 
 ]
 export default function Home() {
-  
+
   const [filter, setFilter] = useState(FilterStatus.PENDING)
   const [description, setDescription] = useState("")
-  const [items, setItems] = useState<any>([])
+  const [items, setItems] = useState<ItemStorage[]>([])
 
-  function handleAdd(){
-    if(!description.trim()){
+  async function handleAdd() {
+    if (!description.trim()) {
       Alert.alert("Adicionar", "Informe a descrição para adicionar.")
     }
-    const newItem ={
+    const newItem = {
       id: Math.random().toString().substring(2),
       description,
       status: FilterStatus.PENDING
     }
 
-    setItems([...items,newItem])
+    await itemsStorage.add(newItem)
+    await getItems()
   }
+
+  async function getItems() {
+    try {
+      const response = await itemsStorage.get()
+      setItems(response)
+    } catch (error) {
+      console.log(error)
+      Alert.alert("Erro", "Não foi possível filtrar os itens.")
+    }
+  }
+  useEffect(() => {
+    getItems()
+   }, [])
+
   return (
     <View style={styles.container}>
       <Image style={styles.logo} source={require("@/assets/logo.png")} />
       <View style={styles.form}>
 
-        <Input placeholder="O que você precisa comprar?" onChangeText={setDescription}/>
+        <Input placeholder="O que você precisa comprar?" onChangeText={setDescription} />
         <Button title={"Adicionar"} activeOpacity={0.8} onPress={handleAdd} />
 
       </View>
@@ -50,7 +66,7 @@ export default function Home() {
         <View style={styles.header}>
           {
             FILTER_STATUS.map((status) => (
-              <Filter key={status} status={status} isActive={status === filter} onPress={() => setFilter(status)}/>
+              <Filter key={status} status={status} isActive={status === filter} onPress={() => setFilter(status)} />
             ))
           }
           <TouchableOpacity style={styles.clearButton}>
@@ -61,17 +77,17 @@ export default function Home() {
 
         <FlatList
           data={items}
-          keyExtractor={(item)=> item.id}
-          renderItem={({item})=>(
-              <Item
-                data={item}
-                onRemove={() => console.log( item.id )}
-                onStatus={() => console.log(item.status)}
-              /> )}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <Item
+              data={item}
+              onRemove={() => console.log(item.id)}
+              onStatus={() => console.log(item.status)}
+            />)}
           showsVerticalScrollIndicator={false}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
           contentContainerStyle={styles.listContent}
-          ListEmptyComponent={()=> <Text style={styles.empty}>Nenhum item aqui.</Text>} 
+          ListEmptyComponent={() => <Text style={styles.empty}>Nenhum item aqui.</Text>}
         />
       </View>
     </View>
