@@ -45,6 +45,14 @@ async function remove(id: string) {
     await save(updatedItems)
 }
 
+async function clear(){
+    try {
+        await AsyncStorage.removeItem(ITEMS_STORAGE_KEY)
+    } catch (error) {
+        throw new Error("ITEMS_CLEAR: " + error)
+    }
+}
+
 export const itemsStorage = {
-    get, getByStatus, add, remove
+    get, getByStatus, add, remove, clear
 }

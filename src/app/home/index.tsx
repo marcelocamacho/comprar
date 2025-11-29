@@ -54,6 +54,22 @@ export default function Home() {
 
   async function handleStatus(id: string){}
 
+  function handleClear(){
+    Alert.alert("Limpar", "Tem certeza de remover todos?", [
+      {text: "Não", style: "cancel"},
+      {text: "Sim", onPress: onClear}
+    ])
+  }
+
+  async function onClear(){
+    try {
+      await itemsStorage.clear()
+      itemsByStatus()
+    } catch (error) {
+      console.log(error)
+      Alert.alert("Limpar", "Não foi possível remover todos os items.")
+    }
+  }
   async function itemsByStatus() {
     try {
       const response = await itemsStorage.getByStatus(filter)
@@ -88,7 +104,7 @@ export default function Home() {
               <Filter key={status} status={status} isActive={status === filter} onPress={() => setFilter(status)} />
             ))
           }
-          <TouchableOpacity style={styles.clearButton}>
+          <TouchableOpacity style={styles.clearButton} onPress={handleClear}>
             <Text style={styles.clearText}>Limpar</Text>
           </TouchableOpacity>
         </View>
