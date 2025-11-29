@@ -1,4 +1,4 @@
-import { Image, Text, TouchableOpacity, View, ScrollView, FlatList, Alert } from "react-native";
+import { Image, Text, TouchableOpacity, View, ScrollView, FlatList, Alert, Keyboard } from "react-native";
 import { styles } from "./styles";
 import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
@@ -29,6 +29,7 @@ export default function Home() {
     if (!description.trim()) {
       Alert.alert("Adicionar", "Informe a descrição para adicionar.")
     }
+    Keyboard.dismiss()
     const newItem = {
       id: Math.random().toString().substring(2),
       description,
@@ -39,6 +40,7 @@ export default function Home() {
     await itemsByStatus()
     Alert.alert("Adicionar", `Adicionado ${description}.`)
     setDescription('')
+    setFilter(FilterStatus.PENDING)
   }
 
   async function itemsByStatus() {
