@@ -52,7 +52,16 @@ export default function Home() {
     }
   }
 
-  async function handleStatus(id: string){}
+  async function handleStatus(id: string){
+    try {
+      await itemsStorage.toggleStatus(id)
+      await itemsByStatus()
+    } catch (error) {
+      console.log(error)
+      Alert.alert("Erro", "Não foi possível atualizar.")
+      
+    }
+  }
 
   function handleClear(){
     Alert.alert("Limpar", "Tem certeza de remover todos?", [
@@ -70,6 +79,7 @@ export default function Home() {
       Alert.alert("Limpar", "Não foi possível remover todos os items.")
     }
   }
+
   async function itemsByStatus() {
     try {
       const response = await itemsStorage.getByStatus(filter)
